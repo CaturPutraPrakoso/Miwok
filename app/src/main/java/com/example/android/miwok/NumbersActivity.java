@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static android.media.CamcorderProfile.get;
+
 public class NumbersActivity extends AppCompatActivity {
 
     private MediaPlayer mMediaPlayer;
@@ -60,10 +62,18 @@ public class NumbersActivity extends AppCompatActivity {
         // {@link ListView} will display list items for each {@link Word} in the list.
         listView.setAdapter(adapter);
 
+        // Set a click listener to play the audio when the list item is clicked on
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mMediaPlayer = MediaPlayer.create(NumbersActivity.this, R.raw.number_one);
+                // Get the {@link Word} object at the given position the user clicked on
+                Word word = words.get(position);
+
+                // Create and setup the {@link MediaPlayer} for the audio resource associated
+                // with the current word
+                mMediaPlayer = MediaPlayer.create(NumbersActivity.this, word.getmAudioResourceId());
+
+                // Start the audio file
                 mMediaPlayer.start();
             }
         });
